@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Soul Heart Here</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D8B4E2;
+            --primary-dark: #b58bbf;
+            --bg: #FFF0F5;
+            --text: #4A4045;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--text);
+            margin: 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            width: 300px;
+            outline: none;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover {
+            background-color: var(--primary-dark);
+        }
+
+        th i {
+            margin-left: 5px;
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        tr:hover {
+            background-color: #fafafa;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Support Requests</h1>
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search by name, phone, or feeling...">
+            <button class="btn" onclick="downloadCSV()">
+                <i class="fas fa-download"></i> Download CSV
+            </button>
+        </div>
+    </div>
+
+    <table id="submissionsTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable('date')">Date <i class="fas fa-sort"></i></th>
+                <th onclick="sortTable('name')">Name <i class="fas fa-sort"></i></th>
+                <th onclick="sortTable('email')">Email <i class="fas fa-sort"></i></th>
+                <th onclick="sortTable('phone')">Phone <i class="fas fa-sort"></i></th>
+                <th onclick="sortTable('age')">Age <i class="fas fa-sort"></i></th>
+                <th onclick="sortTable('feeling')">Feeling <i class="fas fa-sort"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        let submissionsData = [];
+        let sortDirection = -1; // -1 for descending (newest first), 1 for ascending
+
+        async function fetchSubmissions() {
+            try {
+                const response = await fetch('/api/admin/submissions');
+                submissionsData = await response.json();
+
+                // Initial sort by ID (roughly date) desc
+                submissionsData.sort((a, b) => b.id - a.id);
+
+                renderTable(submissionsData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function renderTable(data) {
+            const tbody = document.querySelector('#submissionsTable tbody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="no-data">No submissions found.</td></tr>';
+                return;
+            }
+
+            data.forEach(sub => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${sub.date || new Date(sub.id).toLocaleString()}</td>
+                    <td>${sub.name}</td>
+                    <td>${sub.email || '-'}</td>
+                    <td>${sub.phone}</td>
+                    <td>${sub.age}</td>
+                    <td>${sub.feeling}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Search / Filter Function
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filteredData = submissionsData.filter(item =>
+                item.name.toLowerCase().includes(query) ||
+                (item.email && item.email.toLowerCase().includes(query)) ||
+                item.phone.toLowerCase().includes(query) ||
+                item.feeling.toLowerCase().includes(query) ||
+                (item.date && item.date.toLowerCase().includes(query))
+            );
+            renderTable(filteredData);
+        });
+
+        // Sorting Function
+        function sortTable(key) {
+            sortDirection *= -1; // Toggle direction
+
+            submissionsData.sort((a, b) => {
+                let valA = a[key] ? a[key].toString().toLowerCase() : '';
+                let valB = b[key] ? b[key].toString().toLowerCase() : '';
+
+                if (key === 'date') {
+                    // Fallback to ID which is a timestamp if date string parsing is complex
+                    valA = a.id;
+                    valB = b.id;
+                }
+
+                if (valA < valB) return -1 * sortDirection;
+                if (valA > valB) return 1 * sortDirection;
+                return 0;
+            });
+
+            // Re-filter if search is active (optional, here we just re-render all relative to sort)
+            // But better user experience is to respect the current filter:
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredData = submissionsData.filter(item =>
+                item.name.toLowerCase().includes(query) ||
+                item.phone.toLowerCase().includes(query) ||
+                item.feeling.toLowerCase().includes(query) ||
+                (item.date && item.date.toLowerCase().includes(query))
+            );
+
+            renderTable(filteredData);
+        }
+
+        // CSV Download Function
+        function downloadCSV() {
+            if (submissionsData.length === 0) {
+                alert("No data to download.");
+                return;
+            }
+
+            const headers = ["Date", "Name", "Email", "Phone", "Age", "Feeling"];
+            const csvRows = [];
+            csvRows.push(headers.join(","));
+
+            submissionsData.forEach(row => {
+                // Escape quotes and handle commas in content
+                const escape = (text) => {
+                    const str = String(text || '');
+                    return `"${str.replace(/"/g, '""')}"`;
+                };
+
+                const values = [
+                    escape(row.date || new Date().toLocaleString()),
+                    escape(row.name),
+                    escape(row.email),
+                    escape(row.phone),
+                    escape(row.age),
+                    escape(row.feeling)
+                ];
+                csvRows.push(values.join(","));
+            });
+
+            const csvContent = csvRows.join("\n");
+            const blob = new Blob([csvContent], { type: "text/csv" });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.setAttribute("hidden", "");
+            a.setAttribute("href", url);
+            a.setAttribute("download", "support_requests.csv");
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Fetch on load
+        fetchSubmissions();
+
+        // Refresh every 30 seconds
+        setInterval(fetchSubmissions, 30000);
+    </script>
+</body>
+
+</html>

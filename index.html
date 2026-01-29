@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Heart Here</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="#summary" class="nav-btn">Summary</a>
+            <a href="#services" class="nav-btn">How We Connect</a>
+            <a href="#trust" class="nav-btn">Trusted / Ratings</a>
+            <a href="#contact" class="nav-btn">How to Contact</a>
+            <a href="#contact" class="nav-btn cta-btn">I'm Ready to Talk</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Summary Section -->
+        <section class="section fade-in" id="summary">
+            <img src="images/support-characters.png" alt="Comfort and connection" class="hero-image"
+                style="max-width: 250px; margin-bottom: 20px; border-radius: 20px;">
+            <h1>Soul Heart Here</h1>
+            <p class="summary-text">
+                A safe place for when you feel lonely, confused, stressed, or just emotionally tired.
+                Sometimes, we all need a moment to breathe and someone to truly listen.
+                Here, you are not alone. It is okay to ask for support, and it is okay to just be you.
+            </p>
+        </section>
+
+        <!-- Services Section -->
+        <section class="section scroll-reveal" id="services">
+            <h2>How We Connect</h2>
+            <p class="section-intro">We offer simple, human connection. No pressure, just support.</p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Voice Call</h3>
+                    <p>Hear a comforting voice. Share your thoughts without worry.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-video"></i>
+                    <h3>Video Call</h3>
+                    <p>Face-to-face connection for when you need a friendly smile.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>Personal Meet-up</h3>
+                    <p>A real presence for those moments when digital isn't enough.</p>
+                </div>
+            </div>
+            <p class="no-cost-note">Note: This is a paid service. Pay what feels right after the session.</p>
+        </section>
+
+        <!-- Rating and Trust Section -->
+        <section class="section scroll-reveal" id="trust">
+            <h2>Trusted Support</h2>
+            <div class="rating-box">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="rating-score">4.5 / 5</span>
+                <p class="trust-text">"Most people felt better after talking."</p>
+                <p class="sub-trust">Because sometimes, all we need is a caring voice, a listening heart, and the
+                    reassurance that someone is truly there for us.</p>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="section scroll-reveal" id="contact">
+            <div class="glass-card">
+                <h2>I'm Ready to Talk</h2>
+                <form id="supportForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span style="color:red">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span style="color:red">*</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="So we can reach out" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age Range</label>
+                        <select id="age" name="age">
+                            <option value="under_18">Under 18</option>
+                            <option value="18_25">18 - 25</option>
+                            <option value="26_35">26 - 35</option>
+                            <option value="36_50">36 - 50</option>
+                            <option value="50_plus">50+</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feeling">What's on your mind?</label>
+                        <textarea id="feeling" name="feeling" rows="4"
+                            placeholder="Share as much or as little as you like..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <p id="statusMessage" class="status-msg"></p>
+                </form>
+            </div>
+        </section>
+
+        <footer class="fade-in contact-footer">
+            <div class="footer-content">
+                <h3>Contact Us</h3>
+                <p>
+                    <strong>Email:</strong> <a href="mailto:soulhearthere@gmail.com">soulhearthere@gmail.com</a>
+                    |
+                    <strong>Address:</strong> <a
+                        href="https://www.google.com/maps/search/?api=1&query=12.997775,80.269933"
+                        target="_blank">Chennai-21</a>
+                </p>
+                <p class="copyright">&copy; 2026 Soul Heart Here. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

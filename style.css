@@ -1,0 +1,438 @@
+:root {
+    --primary-color: #D8B4E2;
+    /* Soft Lilac */
+    --secondary-color: #9D8189;
+    /* Warm Mauve */
+    --accent-color: #FFCDB2;
+    /* Gentle Peach */
+    --bg-color: #FFF0F5;
+    /* Lavender Blush */
+    --text-color: #4A4045;
+    /* Warm Dark Grey */
+    --text-light: #7E6C75;
+    /* Muted Mauve */
+    --white-alpha: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navigation */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 240, 245, 0.9);
+    /* Matches bg-color with transparency */
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    /* Allows wrapping on mobile */
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+}
+
+.nav-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.cta-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--secondary-color);
+}
+
+.cta-btn:hover {
+    background-color: #8D9E76;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer Styles */
+.contact-footer {
+    margin-top: 40px;
+    padding: 30px 20px;
+    background: transparent;
+    /* Integrated with background */
+    border-radius: 0;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+}
+
+.footer-content h3 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.footer-content a {
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--text-color);
+}
+
+.footer-content a:hover {
+    color: var(--secondary-color);
+    border-bottom-color: var(--secondary-color);
+}
+
+.copyright {
+    margin-top: 30px;
+    font-size: 0.8rem !important;
+    opacity: 0.7;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+    /* Offset for sticky header */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.8;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Background Image Handling */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Pink and Purple Gradient */
+    background: linear-gradient(135deg, #FFF0F5 0%, #E6E6FA 60%, #F3E5F5 100%);
+    opacity: 1;
+    z-index: -1;
+}
+
+
+
+/* Heart Trail Animation */
+.heart-trail {
+    position: fixed;
+    pointer-events: none;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    animation: floatHeart 1.5s ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translate(10px, -40px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+.container {
+    width: 90%;
+    max-width: 700px;
+    margin: auto;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* General Section Styling for Long Scroll */
+.section {
+    min-height: 80vh;
+    /* Makes each section feel significant */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Typography */
+h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    letter-spacing: -1px;
+}
+
+h2 {
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: var(--secondary-color);
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+p {
+    font-size: 1.15rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+/* specific text adjustments */
+.summary-text {
+    font-size: 1.3rem;
+    line-height: 1.9;
+    color: #555;
+}
+
+.section-intro {
+    margin-bottom: 40px;
+}
+
+.no-cost-note {
+    margin-top: 30px;
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    width: 100%;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 30px 20px;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.service-card i {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+/* Trust Section */
+.rating-box {
+    text-align: center;
+}
+
+.stars {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.rating-score {
+    display: block;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.trust-text {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.sub-trust {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Form Styling */
+.glass-card {
+    background: var(--white-alpha);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 30px;
+    border: 1px solid var(--glass-border);
+    padding: 50px 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin-left: 5px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: var(--text-color);
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    background: #fff;
+    box-shadow: 0 0 0 2px var(--secondary-color);
+}
+
+textarea {
+    resize: none;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #8D9E76;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(163, 177, 138, 0.4);
+}
+
+.status-msg {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .nav-container {
+        gap: 10px;
+    }
+
+    .nav-btn {
+        padding: 5px 12px;
+        font-size: 0.85rem;
+        flex: 1 1 auto;
+        /* Grow to fill space */
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .section {
+        min-height: auto;
+        margin-bottom: 80px;
+        padding: 40px 0;
+    }
+
+    .glass-card {
+        padding: 30px 20px;
+    }
+}
